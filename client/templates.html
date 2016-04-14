@@ -8,6 +8,9 @@
 <template name="plans">
 	<header>
 	  <h1>My plans</h1>
+	  <form class="new-plan">
+	    <input type="text" name="planName" placeholder="Add new plan" />
+	  </form>
 	</header>
 
 	<ul>
@@ -18,7 +21,10 @@
 </template>
 
 <template name="planLine">
-  <li><a href="/plans/{{_id._str}}">{{name}}</a></li>
+  <li>
+  	<a href="/plans/{{_id._str}}">{{name}}</a>
+ 	<button class="delete">&times;</button>
+  </li>
 </template>
 
 <template name="tasks">

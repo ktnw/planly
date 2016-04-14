@@ -19,8 +19,6 @@ Template.plans.events({
 
     // Insert a task into the collection
     Plans.insert({
-      //using Mongo.ObjectID to override the default Meteor string IDs.
-      _id: new Mongo.ObjectID,
       name: name,
       createdAt: new Date(), // current time
     });

@@ -31,11 +31,19 @@
 	  {{#each tasks}}
 	    {{> task}}
 	  {{/each}}
+	  <li>
+	  	<form class="new-task">
+	  	  <input type="text" name="taskText" placeholder="Add new task" />
+	  	</form>
+	  </li>
 	</ul>
 </template>
 
 <template name="task">
-  <li>{{text}}</li>
+  <li>
+  	{{text}}
+  	<button class="delete">&times;</button>
+  </li>
 </template>
 
 

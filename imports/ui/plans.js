@@ -2,6 +2,7 @@ import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js'
 
+
 Template.plans.helpers({
   plans() {
     return Plans.find({}, { sort: { createdAt: -1 } });
@@ -17,7 +18,7 @@ Template.plans.events({
     const target = event.target;
     const name = target.planName.value;
 
-    // Insert a task into the collection
+    // Insert new Plan into the collection
     Plans.insert({
       name: name,
       createdAt: new Date(), // current time
@@ -25,9 +26,6 @@ Template.plans.events({
 
     // Clear form
     target.planName.value = '';
-  },
-  'click .delete'() {
-     Plans.remove(this._id);
   },
 });
 

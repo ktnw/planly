@@ -15,8 +15,17 @@
 
 <template name="planLine">
   <li>
-  	<a href="/plans/{{_id}}">{{name}}</a>
- 	<button class="delete">&times;</button>
+  	{{#if editPlanId}}
+  		<form class="editPlan">
+  			<input type="text" name="editPlanName" value="{{name}}" />
+  			<button class="save" type="submit">Save</button>
+  			<button class="cancel">Cancel</button>
+  		</form>
+  	{{else}}
+  		<a href="/plans/{{_id}}">{{name}}</a>
+  		<button class="edit">Edit</button>
+ 		<button class="delete">&times;</button>
+ 	{{/if}}
   </li>
 </template>
 

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js'
@@ -19,10 +20,7 @@ Template.plans.events({
     const name = target.planName.value;
 
     // Insert new Plan into the collection
-    Plans.insert({
-      name: name,
-      createdAt: new Date(), // current time
-    });
+    Meteor.call('plans.insert', name);
 
     // Clear form
     target.planName.value = '';

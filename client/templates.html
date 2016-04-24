@@ -38,7 +38,7 @@
 
 	<ul>
 	  {{#each tasks}}
-	    {{> task}}
+	    {{> taskLines}}
 	  {{/each}}
 	  <li>
 	  	<form class="new-task">
@@ -48,10 +48,19 @@
 	</ul>
 </template>
 
-<template name="task">
+<template name="taskLines">
   <li>
-  	{{text}}
-  	<button class="delete">&times;</button>
+  	{{#if editTaskId}}
+  		<form class="editTask">
+  			<input name="editTaskText" value="{{text}}">
+  			<button class="save" type="submit">Save</button>
+  			<button class="cancel">Cancel</button>
+  		</form>
+  	{{else}}
+  		{{text}}
+  		<button class="edit">Edit</button>
+  		<button class="delete">&times;</button>
+  	{{/if}}
   </li>
 </template>
 

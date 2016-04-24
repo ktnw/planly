@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js'
@@ -18,7 +19,7 @@ Template.planLine.events({
     template.editPlanId.set(this._id);
   },
   'click .delete'() {
-     Plans.remove(this._id);
+     Meteor.call('plans.delete', this._id);
   },
 
   'click .cancel'(event, template) {
@@ -28,10 +29,7 @@ Template.planLine.events({
   'submit .editPlan'(event, template) {
     event.preventDefault();
     const name = event.target.editPlanName.value;
-    var editPlan = {
-      name: name,
-    };
-    Plans.update( this._id, {$set: editPlan});
+    Meteor.call('plans.update', this._id, name)
     template.editPlanId.set(null);
   },
   'keypress input'(event, template){

@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js';
@@ -32,11 +33,7 @@ Template.tasks.events({
     const planId = FlowRouter.getParam("id");
 
     // Insert a task into the collection
-    Tasks.insert({
-      planId: planId,
-      text: text,
-      createdAt: new Date(), // current time
-    });
+    Meteor.call('tasks.insert', planId, text);
 
     // Clear form
     target.taskText.value = '';

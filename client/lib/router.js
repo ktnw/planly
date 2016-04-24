@@ -3,6 +3,7 @@ import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 import '../../imports/ui/plans.js';
 import '../../imports/ui/tasks.js';
 import '../../imports/ui/planLine.js';
+import '../../imports/ui/taskLines.js';
 
 FlowRouter.route('/plans', {
   name: 'Plans.show',

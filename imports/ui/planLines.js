@@ -3,18 +3,18 @@ import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js'
 
-Template.planLine.onCreated(function(){
+Template.planLines.onCreated(function(){
   this.editPlanId = new ReactiveVar();
 });
 
-Template.planLine.helpers({
+Template.planLines.helpers({
   editPlanId: function() {
     return Template.instance().editPlanId.get();
   },
 });
 
 
-Template.planLine.events({
+Template.planLines.events({
   'click .edit'(event, template){
     template.editPlanId.set(this._id);
   },

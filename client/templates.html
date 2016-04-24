@@ -8,12 +8,12 @@
 
 	<ul>
 	  {{#each plans}}
-	    {{> planLine}}
+	    {{> planLines}}
 	  {{/each}}
 	</ul>
 </template>
 
-<template name="planLine">
+<template name="planLines">
   <li>
   	{{#if editPlanId}}
   		<form class="editPlan">

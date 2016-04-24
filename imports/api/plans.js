@@ -24,9 +24,9 @@ Meteor.methods({
   	Plans.remove(id);
   },
   'plans.update'(id, name) {
-  	var editPlan = {
+  	var plan = {
       name: name,
     };
-    Plans.update( id, {$set: editPlan} );
+    Plans.update( id, {$set: plan} );
   },
 });

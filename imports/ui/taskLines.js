@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js'
 
+
 Template.taskLines.onCreated(function(){
   this.editTaskId = new ReactiveVar();
 });
@@ -18,7 +19,8 @@ Template.taskLines.events({
     template.editTaskId.set(this._id);
   },
   'click .delete'() {
-     Meteor.call('tasks.delete', this._id);
+  	const planId = FlowRouter.getParam("id"); 
+    Meteor.call('tasks.delete', planId, this._id);
   },
   'click .cancel'(event, template) {
   	event.preventDefault();
@@ -26,8 +28,9 @@ Template.taskLines.events({
   },
   'submit .editTask'(event, template) {
     event.preventDefault();
+    const planId = FlowRouter.getParam("id"); 
     const text = event.target.editTaskText.value;
-    Meteor.call('tasks.update', this._id, text)
+    Meteor.call('tasks.update', planId, this._id, text)
     template.editTaskId.set(null);
   },
   'keypress input'(event, template){
@@ -36,4 +39,3 @@ Template.taskLines.events({
     }
   },
 });
-

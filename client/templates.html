@@ -29,7 +29,7 @@
   </li>
 </template>
 
-<template name="tasks">
+<template name="plan">
   <header>
 	  {{#with plan}}
 	    <h1>{{name}}</h1>
@@ -37,7 +37,7 @@
   </header>
 
 	<ul>
-	  {{#each tasks}}
+	  {{#each plan.tasks}}
 	    {{> taskLines}}
 	  {{/each}}
 	  <li>

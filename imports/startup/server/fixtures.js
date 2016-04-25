@@ -1,50 +1,54 @@
 import { Meteor } from 'meteor/meteor';
+import { Random } from 'meteor/random';
 import { Plans } from '../../api/plans.js';
-import { Tasks } from '../../api/tasks.js';
 
 // if the database is empty on server start, create some sample data.
 Meteor.startup(() => {
   if (Plans.find().count() === 0) {
+  	console.log("Loading fixtures...");
+  	let timestamp = (new Date()).getTime();
+  	let tasks = [];
+
     const data = [
       {
-        name: 'Plan A',
-        items: [
-          'Hello World!',
-        ],
+        "name": "Plan A",
+        "tasks": tasks,
       },
       {
-        name: 'Plan B',
-        items: [
-          'Walk the dog',
-          'Wash the dishes',
-          'Mow the grass',
-          'Meet Carl Friedrich Gauss for a beer',
-        ],
+        "name": "Plan B",
+        "tasks": tasks,
       },
       {
-        name: 'Empty plan',
-        items: [
-        ],
+        "name": "Empty Plan",
+        "tasks": tasks,
       },
     ];
-
-    let timestamp = (new Date()).getTime();
 
     data.forEach((plan) => {
       const planId = Plans.insert({
         name: plan.name,
-        createdAt: new Date(),
+        createdAt: new Date(timestamp += 1),
+        tasks,
       });
 
-      plan.items.forEach((text) => {
-        Tasks.insert({
-          planId,
-          text,
-          createdAt: new Date(timestamp),
-        });
-
-        timestamp += 1; // ensure unique timestamp.
-      });
     });
-  }
+
+    tasks = [
+    	{ "_id": Random.id(), "text": "Hello World!", "createdAt": new Date(timestamp += 1) },
+    ];
+
+    tasks.forEach((task) => {
+    	Plans.update( { "name" : "Plan A" }, { $push: { "tasks": task } } );
+    });
+
+    tasks = [
+        { "_id": Random.id(), "text": "Show Nicola Tesla my newest Lion battery", "createdAt": new Date(timestamp += 1) },
+        { "_id": Random.id(), "text": "Send a birthday card to Claude Shannon", "createdAt": new Date(timestamp += 1) },
+        { "_id": Random.id(), "text": "Take Carl Friedrich Gauss out for a beer", "createdAt": new Date(timestamp += 1) },
+    ];
+
+    tasks.forEach((task) => {
+    	Plans.update( { "name" : "Plan B" }, { $push: { "tasks": task } } );
+    });
+  };
 });

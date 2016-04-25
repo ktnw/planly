@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
+import { Random } from 'meteor/random';
 import { check } from 'meteor/check';
 
 export const Plans = new Mongo.Collection('plans');
@@ -16,17 +17,28 @@ Meteor.methods({
     Plans.insert({
       name: name,
       createdAt: new Date(),
+      tasks : [],
       //owner: Meteor.userId(),
       //username: Meteor.user().username,
     });
   },
-  'plans.delete'(id) {
-  	Plans.remove(id);
+  'plans.delete'(planId) {
+  	Plans.remove(planId);
   },
-  'plans.update'(id, name) {
+  'plans.update'(planId, name) {
   	var plan = {
       name: name,
     };
-    Plans.update( id, {$set: plan} );
+    Plans.update( planId, {$set: plan} );
+  },
+  'tasks.insert'(planId, text) {
+  	const taskId = Random.id();
+	Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "createdAt": new Date() } } } );
+  },
+  'tasks.update'(planId, taskId, text) {
+  	Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.text": text } } );
+  },
+  'tasks.delete'(planId, taskId) {
+  	Plans.update({ "_id" : planId }, {$pull : { "tasks" : { "_id": taskId } } } );
   },
 });

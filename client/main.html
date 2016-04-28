@@ -2,6 +2,19 @@
   <title>Planly</title>
 </head>
 
-<template name="mainTemplate">
-  {{> Template.dynamic template=main}}
+<template name="main">
+  {{#if authInProcess}}
+    <p>loading ...</p>
+  {{else}}
+    {{#if authenticated}}
+      <p>
+      	<a href="/plans" class="plans">Plans</a> | 
+      	<a href="/profile" class="profile">Profile</a> | 
+      	<a href="/logout" class="logout">Logout</a>
+      </p>
+  	  {{> Template.dynamic template=app}}
+  	{{else}}
+  	  {{> Template.dynamic template=account data=data}}
+    {{/if}}
+  {{/if}}
 </template>

@@ -7,7 +7,7 @@ export const Plans = new Mongo.Collection('plans');
 
 if (Meteor.isServer) {
   Meteor.publish('plans', function plansPublication() {
-    return Plans.find();
+    return Plans.find( { authorId: this.userId } );
   });
 }
 
@@ -24,8 +24,7 @@ Meteor.methods({
       name: name,
       createdAt: new Date(),
       tasks : [],
-      //owner: Meteor.userId(),
-      //username: Meteor.user().username,
+      authorId: Meteor.userId(),
     });
   },
   'plans.delete'(planId) {

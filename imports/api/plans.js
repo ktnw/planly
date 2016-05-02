@@ -5,6 +5,12 @@ import { check } from 'meteor/check';
 
 export const Plans = new Mongo.Collection('plans');
 
+if (Meteor.isServer) {
+  Meteor.publish('plans', function plansPublication() {
+    return Plans.find();
+  });
+}
+
 Meteor.methods({
   'plans.insert'(name) {
     check(name, String);

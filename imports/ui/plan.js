@@ -3,6 +3,10 @@ import { Template } from 'meteor/templating';
 
 import { Plans } from '../api/plans.js';
 
+Template.plan.onCreated(function() {
+	Meteor.subscribe('plans');
+});
+
 Template.plan.helpers({
   // return the plan itself
   plan: function() {

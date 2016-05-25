@@ -1,6 +1,6 @@
 <template name="login">
 	<form class="login-form">
-		<p>Please login or <a href="#" class="register">Sign up</a></p>
+		<p>Please login or <a href="#" class="signup">Sign up</a></p>
 		<p class="error-message">{{errorMessage}}</p>
 	    <label>Email:</label><input type="email" name="loginEmail"><br/>
 	    <label>Password:</label><input type="password" name="loginPassword"><br/>
@@ -9,16 +9,10 @@
 	</form>
 </template>
 
-<template name="register">
-    <p>This will be the registration form</p>
-    <p>If you already have an account, <a href="#" class="login">log in</a></p>
-</template>
-
 <template name="forgot-password">
 	<p>This will be the forgot password form</p>
 	<p><a href="#" class="login">Cancel</a></p>
 </template>
-
 
 <template name="change-password">
 	<p>This will be the change password form</p>

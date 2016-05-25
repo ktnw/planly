@@ -5,6 +5,7 @@ import '../../imports/ui/plans.js';
 import '../../imports/ui/planLines.js';
 import '../../imports/ui/plan.js';
 import '../../imports/ui/taskLines.js';
+import '../../imports/ui/signup.js';
 
 
 
@@ -48,4 +49,20 @@ FlowRouter.route('/logout', {
       FlowRouter.go('/');
     });
   },
+});
+
+FlowRouter.route( '/verify-email/:token', {
+  name: 'verify-email',
+  action( params ) {
+    Accounts.verifyEmail( params.token, ( error ) =>{
+      if ( error ) {
+        //Bert.alert( error.reason, 'danger' );
+        console.log(error.reason);
+      } else {
+        FlowRouter.go( '/' );
+        //Bert.alert( 'Email verified! Thanks!', 'success' );
+        console.log('Email verified! Thanks!');
+      }
+    });
+  }
 });

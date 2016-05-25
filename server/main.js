@@ -6,5 +6,12 @@ import { Meteor } from 'meteor/meteor';
 import '../imports/api/plans.js';
 
 Meteor.startup(() => {
-  // code to run on server at startup
+  smtp = {
+    server:   'localhost',
+    port: 25
+  }
+
+  process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.server) + ':' + smtp.port;
+  console.log("MAIL_URL: ", process.env.MAIL_URL);
+  
 });

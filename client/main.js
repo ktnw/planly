@@ -19,12 +19,15 @@ Template.main.helpers({
   },
   authenticated: function() {
     return !!Meteor.user();
+  },
+  verified: function() {
+  	return Meteor.user().emails[0].verified;
   }
 });
 
 Template.main.events({
-  'click .register'(event, template) {
-  	template.account.set("register");
+  'click .signup'(event, template) {
+  	template.account.set("signup");
   },
   'click .forgot-password'(event, template) {
   	template.account.set("forgot-password");
@@ -34,6 +37,18 @@ Template.main.events({
   },
   'click .change-password'(event, template) {
   	template.account.set("change-password");
+  },
+  'click .resend-verification-email'(event, template) {
+    Meteor.call( 'sendVerificationEmail', ( error, response ) => {
+      if ( error ) {
+        //Bert.alert( error.reason, 'danger' );
+        console.log(error.reason);
+      } else {
+        let email = Meteor.user().emails[ 0 ].address;
+        //Bert.alert( 'Verification sent to ${ email }!', 'success' );
+        console.log("Verification sent to ", email, "!");
+      }
+    });
   },
   'submit .login-form'(event, template) {
     event.preventDefault();

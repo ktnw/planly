@@ -7,12 +7,18 @@
     <p>loading ...</p>
   {{else}}
     {{#if authenticated}}
-      <p>
-      	<a href="/plans" class="plans">Plans</a> | 
-      	<a href="/profile" class="profile">Profile</a> | 
-      	<a href="/logout" class="logout">Logout</a>
-      </p>
-  	  {{> Template.dynamic template=app}}
+        <p>
+      	  <a href="/profile" class="profile">Profile</a> | 
+      	  <a href="/logout" class="logout">Logout</a>
+        </p>
+      {{#if verified}}
+        <p>
+          <a href="/plans" class="plans">Plans</a> | 
+        </p>
+  	    {{> Template.dynamic template=app}}
+      {{else}}
+        <p class="alert alert-warning">You need to verify your email address before using Planly.io. <a href="#" class="resend-verification-email">Resend verification email</a>.</p>
+  	  {{/if}}
   	{{else}}
   	  {{> Template.dynamic template=account data=data}}
     {{/if}}

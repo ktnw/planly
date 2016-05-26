@@ -1,11 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
-import '../../imports/ui/plans.js';
-import '../../imports/ui/planLines.js';
-import '../../imports/ui/plan.js';
-import '../../imports/ui/taskLines.js';
-import '../../imports/ui/signup.js';
+import '../../imports/client/plans.js';
+import '../../imports/client/planLines.js';
+import '../../imports/client/plan.js';
+import '../../imports/client/taskLines.js';
+import '../../imports/client/signup.js';
 
 
 

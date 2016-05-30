@@ -12,7 +12,16 @@ if (Meteor.isServer) {
   Meteor.publish('one-plan', function planPublication(planId, secretToken) {
   	//check(groupId, String);
   	var token = secretToken; //here we will have to eventually bcrypt the secretToken
-    return Plans.find( { "_id": planId, "token": token } );
+  	var selector = { "_id": planId, "token": token };
+  	
+  	//find the plan, if an object is returned for correct planId/token combination it means the user is authorized
+  	// hence add the user to the access list
+  	if ( Plans.findOne( selector ) ) {
+  		Plans.update( { "_id": planId }, { $addToSet: {accessList: this.userId } } );
+    }
+    
+    //return collection (N.B. findOne doesn't return collection!)
+    return Plans.find( selector );
   });
 }
 

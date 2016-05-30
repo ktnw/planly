@@ -30,6 +30,7 @@
 </template>
 
 <template name="plan">
+  {{#if plan}}
   <header>
 	  {{#with plan}}
 	    <h1>{{name}}</h1>
@@ -46,6 +47,12 @@
 	  	</form>
 	  </li>
 	</ul>
+  {{else}}
+    <form class="get-token">
+	    <input type="text" name="secretToken" placeholder="Access token" />
+	    <button type="submit">Send</button>
+	</form>
+  {{/if}}
 </template>
 
 <template name="taskLines">

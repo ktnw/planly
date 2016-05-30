@@ -9,9 +9,8 @@ if (Meteor.isServer) {
   Meteor.publish('plans', function plansPublication() {
     return Plans.find( { authorId: this.userId } );
   });
-  Meteor.publish('aPlan', function planPublication(planId, secretToken) {
+  Meteor.publish('one-plan', function planPublication(planId, secretToken) {
   	//check(groupId, String);
-  	console.log("Received subscription for planId=", planId, " and token=", secretToken);
   	var token = secretToken; //here we will have to eventually bcrypt the secretToken
     return Plans.find( { "_id": planId, "token": token } );
   });

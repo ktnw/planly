@@ -41,8 +41,7 @@ Template.plan.events({
     const target = event.target;
     const secretToken = target.secretToken.value;
     const planId = FlowRouter.getParam("id");
-    console.log('Refreshing subscription with planId=',planId,' secretToken=',secretToken);
-    Meteor.subscribe('aPlan', planId, secretToken);
+    Meteor.subscribe('one-plan', planId, secretToken);
     // Clear form
     target.secretToken.value = '';
   },

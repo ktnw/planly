@@ -30,7 +30,7 @@ Template.taskLines.events({
     event.preventDefault();
     const planId = FlowRouter.getParam("id"); 
     const text = event.target.editTaskText.value;
-    Meteor.call('tasks.update', planId, this._id, text)
+    Meteor.call('tasks.update', planId, this._id, text);
     template.editTaskId.set(null);
   },
   'keypress input'(event, template){
@@ -38,4 +38,8 @@ Template.taskLines.events({
       template.editTaskId.set(null);
     }
   },
+  'click .toggle-status'(event, template) {
+  	const planId = FlowRouter.getParam("id"); 
+  	Meteor.call('tasks.toggle-status', planId, this._id, this.status);
+  }
 });

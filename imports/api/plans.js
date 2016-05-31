@@ -6,26 +6,25 @@ import { check } from 'meteor/check';
 export const Plans = new Mongo.Collection('plans');
 
 if (Meteor.isServer) {
-  Meteor.publish('plans', function plansPublication() {
+  Meteor.publish('my-plans', function plansPublication() {
     return Plans.find( { authorId: this.userId } );
   });
-  Meteor.publish('one-plan', function planPublication(planId, secretToken) {
-  	//check(groupId, String);
-  	var token = secretToken; //here we will have to eventually bcrypt the secretToken
-  	var selector = { "_id": planId, "token": token };
-  	
-  	//find the plan, if an object is returned for correct planId/token combination it means the user is authorized
-  	// hence add the user to the access list
-  	if ( Plans.findOne( selector ) ) {
-  		Plans.update( { "_id": planId }, { $addToSet: {accessList: this.userId } } );
-    }
-    
-    //return collection (N.B. findOne doesn't return collection!)
-    return Plans.find( selector );
+  Meteor.publish('other-plans', function planPublication() {
+    return Plans.find( { accessList: [this.userId] } );
   });
 }
 
 Meteor.methods({
+  'plans.access'( planId, secretToken ) {
+  	var token = secretToken; // <- bcrypt the secretToken here to be able to compare the bcrypted token in the DB
+    // check that the plan exists and if it does, check that the secretToken provided matches what's in the database
+  	var plan = Plans.findOne(planId);
+  	if ( plan && plan.token == token ) {
+  		Plans.update( { "_id": planId }, { $addToSet: {accessList: Meteor.userId() } } );
+    } else {
+    	throw new Meteor.Error('not-authorized');
+    }
+  },
   'plans.insert'(name) {
     // Make sure the user is logged in before inserting a task
     if (! Meteor.userId()) {
@@ -67,7 +66,7 @@ Meteor.methods({
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  const taskId = Random.id();
-	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "createdAt": new Date() } } } );
+	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "status": "Not started", "createdAt": new Date() } } } );
 	}
   },
   'tasks.update'(planId, taskId, text) {
@@ -86,6 +85,27 @@ Meteor.methods({
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  Plans.update({ "_id" : planId }, {$pull : { "tasks" : { "_id": taskId } } } );
+  	}
+  },
+  'tasks.toggle-status'(planId, taskId, currentStatus) {
+  	const plan = Plans.findOne(planId);
+  	if (plan.authorId !== this.userId && !(plan.accessList.indexOf(this.userId) >= 0)) {
+  	  // If the current user is not the author, or is not in the accessList, don't allow toggling status
+  	  throw new Meteor.Error('not-authorized');
+  	} else {
+  	  let newStatus;
+  	  switch (currentStatus) {
+  	  	case "Not started": 
+  	  	  newStatus = "In progress";
+  	  	  break;
+  	  	case "In progress":
+  	  	  newStatus = "Completed";
+  	  	  break;
+  	  	case "Completed":
+  	  	  newStatus = "Not started";
+  	  	  break;
+  	  }
+  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.status": newStatus, "tasks.$.statusUpdatedBy": this.userId } } );
   	}
   },
 });

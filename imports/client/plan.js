@@ -4,7 +4,8 @@ import { Template } from 'meteor/templating';
 import { Plans } from '../api/plans.js';
 
 Template.plan.onCreated(function() {
-	Meteor.subscribe('plans');
+	Meteor.subscribe('my-plans');
+	Meteor.subscribe('other-plans');
 });
 
 Template.plan.helpers({
@@ -41,7 +42,9 @@ Template.plan.events({
     const target = event.target;
     const secretToken = target.secretToken.value;
     const planId = FlowRouter.getParam("id");
-    Meteor.subscribe('one-plan', planId, secretToken);
+
+	Meteor.call('plans.access', planId, secretToken);   //to record the user in the accessList
+
     // Clear form
     target.secretToken.value = '';
   },

@@ -5,6 +5,7 @@ import { Plans } from '../api/plans.js'
 
 Template.plans.onCreated(function() {
 	Meteor.subscribe('my-plans');
+	Meteor.subscribe('other-plans');
 });
 
 Template.plans.helpers({

@@ -1,13 +1,20 @@
 <template name="plans">
 	<header>
 	  <h1>My plans</h1>
-	  <form class="new-plan">
-	    <input type="text" name="planName" placeholder="Add new plan" />
+		<form class="new-plan">
+		<input type="text" name="planName" placeholder="Add new plan" />
 	  </form>
 	</header>
 
 	<ul>
-	  {{#each plans}}
+	  {{#each myPlan}}
+	    {{> planLines}}
+	  {{/each}}
+	</ul>
+
+    <h1>Other plans</h1>
+	<ul>
+	  {{#each otherPlan}}
 	    {{> planLines}}
 	  {{/each}}
 	</ul>
@@ -23,8 +30,10 @@
   		</form>
   	{{else}}
   		<a href="/plans/{{_id}}">{{name}}</a>
-  		<button class="edit">Edit</button>
- 		<button class="delete">&times;</button>
+  		{{#if isAuthor}}
+  		  <button class="edit">Edit</button>
+ 		  <button class="delete">&times;</button>
+ 		{{/if}}
  	{{/if}}
   </li>
 </template>

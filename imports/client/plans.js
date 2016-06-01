@@ -9,9 +9,12 @@ Template.plans.onCreated(function() {
 });
 
 Template.plans.helpers({
-  plans() {
-    return Plans.find({}, { sort: { createdAt: -1 } });
+  myPlan() {
+    return Plans.find( { "authorId": Meteor.userId() }, { sort: { createdAt: -1 } });
   },
+  otherPlan() {
+  	return Plans.find( { "authorId": { $ne: Meteor.userId() } }, { sort: { createdAt: -1 } } )
+  }
 });
 
 Template.plans.events({

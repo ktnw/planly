@@ -12,6 +12,16 @@ Template.taskLines.helpers({
   editTaskId: function() {
     return Template.instance().editTaskId.get();
   },
+  isAuthor: function() {
+	var planId = FlowRouter.getParam("id");
+	var plan = Plans.findOne({ _id: planId });
+  	console.log("isAuthor function (taskLines):", plan._id);
+  	if (plan.authorId == Meteor.userId()) {
+  		return true;
+  	} else {
+  		return false;
+  	}
+  },
 });
 
 Template.taskLines.events({

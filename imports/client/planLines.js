@@ -11,6 +11,14 @@ Template.planLines.helpers({
   editPlanId: function() {
     return Template.instance().editPlanId.get();
   },
+  isAuthor: function() {
+  	console.log("isAuthor function (planLines):", this._id);
+  	if (this.authorId == Meteor.userId()) {
+  		return true;
+  	} else {
+  		return false;
+  	}
+  },
 });
 
 

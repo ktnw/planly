@@ -41,11 +41,13 @@
 	  {{#each plan.tasks}}
 	    {{> taskLines}}
 	  {{/each}}
-	  <li>
-	  	<form class="new-task">
-	  	  <input type="text" name="taskText" placeholder="Add new task" />
-	  	</form>
-	  </li>
+	  {{#if isAuthor}}
+		  <li>
+		  	<form class="new-task">
+		  	  <input type="text" name="taskText" placeholder="Add new task" />
+		  	</form>
+		  </li>
+	  {{/if}}
 	</ul>
   {{else}}
     <form class="get-token">
@@ -65,8 +67,10 @@
   		</form>
   	{{else}}
   		<a href="#" class="toggle-status">{{status}}</a> - {{text}}
-  		<button class="edit">Edit</button>
-  		<button class="delete">&times;</button>
+  		{{#if isAuthor}}
+  		  <button class="edit">Edit</button>
+  		  <button class="delete">&times;</button>
+  		{{/if}}
   	{{/if}}
   </li>
 </template>

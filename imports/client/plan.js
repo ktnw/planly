@@ -18,12 +18,7 @@ Template.plan.helpers({
   isAuthor: function() {
     var planId = FlowRouter.getParam("id");
     var plan = Plans.findOne({ _id: planId });
-	console.log("isAuthor function (plan):", plan._id);
-	if ( plan.authorId == Meteor.userId() ) {
-		return true;
-	} else {
-		return false;
-	}
+	return isPlanAuthor(plan.authorId);
   },
 });
 

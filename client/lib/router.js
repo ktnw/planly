@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 import '../../imports/client/plans.js';
+import '../../imports/client/activity.js';
 import '../../imports/client/planLines.js';
 import '../../imports/client/plan.js';
 import '../../imports/client/taskLines.js';
@@ -65,4 +66,12 @@ FlowRouter.route( '/verify-email/:token', {
       }
     });
   }
+});
+
+FlowRouter.route('/activity', {
+  name: 'Plans.activity',
+  action() {
+  	console.log('Router action for path: ', FlowRouter.current().path);
+    BlazeLayout.render('main', { app: "activity" });
+  },
 });

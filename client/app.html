@@ -84,4 +84,14 @@
   </li>
 </template>
 
+<template name="activity">
+	<header>
+	  <h1>Latest Activity</h1>
+	</header>
 
+	<ul>
+	  {{#each plans}}
+	    {{> planLines}}
+	  {{/each}}
+	</ul>
+</template>

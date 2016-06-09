@@ -10,6 +10,6 @@ Template.activity.onCreated(function() {
 
 Template.activity.helpers({
   plans() {
-    return Plans.find( { }, { sort: { updatedAt: -1 } });  //need to change this into ordering "by access date"
+    return Plans.find( { }, { sort: { updatedAt: -1 } });
   },
 });

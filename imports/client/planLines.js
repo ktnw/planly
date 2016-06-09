@@ -14,6 +14,9 @@ Template.planLines.helpers({
   isAuthor: function() {
     return isPlanAuthor(this.authorId);
   },
+  updateTime: function() {
+  	return moment(this.updatedAt).fromNow();
+  }
 });
 
 

@@ -34,6 +34,7 @@ Meteor.methods({
     Plans.insert({
       name: name,
       createdAt: new Date(),
+      updatedAt: new Date(),
       tasks : [],
       authorId: Meteor.userId(),
     });
@@ -55,6 +56,7 @@ Meteor.methods({
     } else {
   	  plan = {
         name: name,
+        updatedAt: new Date(),
       };
       Plans.update( planId, {$set: plan} );
     }
@@ -66,7 +68,7 @@ Meteor.methods({
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  const taskId = Random.id();
-	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "status": "Not started", "createdAt": new Date() } } } );
+	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
 	}
   },
   'tasks.update'(planId, taskId, text) {
@@ -75,7 +77,7 @@ Meteor.methods({
   	  // If the current user is not the author, don't allow update
   	  throw new Meteor.Error('not-authorized');
   	} else {
-  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.text": text } } );
+  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.text": text, "updatedAt": new Date() } } );
   	}
   },
   'tasks.delete'(planId, taskId) {
@@ -84,7 +86,7 @@ Meteor.methods({
   	  // If the current user is not the author, don't allow delete
   	  throw new Meteor.Error('not-authorized');
   	} else {
-  	  Plans.update({ "_id" : planId }, {$pull : { "tasks" : { "_id": taskId } } } );
+  	  Plans.update({ "_id" : planId }, {$pull : { "tasks" : { "_id": taskId } }, $set : { "updatedAt": new Date() } } );
   	}
   },
   'tasks.toggle-status'(planId, taskId, currentStatus) {
@@ -105,7 +107,7 @@ Meteor.methods({
   	  	  newStatus = "Not started";
   	  	  break;
   	  }
-  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.status": newStatus, "tasks.$.statusUpdatedBy": this.userId } } );
+  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.status": newStatus, "tasks.$.statusUpdatedBy": this.userId, "updatedAt": new Date() } } );
   	}
   },
 });

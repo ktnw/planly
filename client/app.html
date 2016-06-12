@@ -21,21 +21,34 @@
 </template>
 
 <template name="planLines">
-  <li>
-  	{{#if editPlanId}}
-  		<form class="editPlan">
-  			<input type="text" name="editPlanName" value="{{name}}" />
-  			<button class="save" type="submit">Save</button>
-  			<button class="cancel">Cancel</button>
-  		</form>
-  	{{else}}
-  		<a href="/plans/{{_id}}">{{name}}</a> - {{updateTime}}
-  		{{#if isAuthor}}
-  		  <button class="edit">Edit</button>
- 		  <button class="delete">&times;</button>
- 		{{/if}}
- 	{{/if}}
-  </li>
+	<div class="well well-sm">
+		<div class="row">
+		  	<div class="col-xs-9 col-sm-10 col-md-11">
+		  		{{#if editPlanId}}
+			  		<form class="editPlan">
+			  			<input type="text" name="editPlanName" value="{{name}}" />
+			  			<button class="save" type="submit">Save</button>
+			  			<button class="cancel">Cancel</button>
+			  		</form>
+				{{else}}
+					<a href="/plans/{{_id}}" class="card-title">{{name}}</a>
+					<p class="card-text">{{updateTime}}</p>
+				{{/if}}
+			</div>
+			<div class="col-xs-3 col-sm-2 col-md-1">
+				{{#if isAuthor}}
+			    	<div class="plan-controls">
+			        	<a href="#" class="edit">
+							<span class="glyphicon glyphicon-edit"></span>
+						</a>
+						<a href="#" class="delete">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
 </template>
 
 <template name="plan">
@@ -51,7 +64,7 @@
 	    {{> taskLines}}
 	  {{/each}}
 	  {{#if isAuthor}}
-		  <li>
+		  <li class="task-line">
 		  	<form class="new-task">
 		  	  <input type="text" name="taskText" placeholder="Add new task" />
 		  	</form>
@@ -67,7 +80,7 @@
 </template>
 
 <template name="taskLines">
-  <li>
+  <li class="task-line">
   	{{#if editTaskId}}
   		<form class="editTask">
   			<input name="editTaskText" value="{{text}}">
@@ -77,8 +90,13 @@
   	{{else}}
   		<a href="#" class="toggle-status">{{status}}</a> - {{text}}
   		{{#if isAuthor}}
-  		  <button class="edit">Edit</button>
-  		  <button class="delete">&times;</button>
+  		  <a href="#" class="edit">
+  		  	<span class="glyphicon glyphicon-edit"></span>
+  		  </a>
+
+  		  <a href="#" class="delete">
+  		  	<span class="glyphicon glyphicon-trash"></span>
+  		  </a>
   		{{/if}}
   	{{/if}}
   </li>
@@ -89,9 +107,7 @@
 	  <h1>Latest Activity</h1>
 	</header>
 
-	<ul>
-	  {{#each plans}}
-	    {{> planLines}}
-	  {{/each}}
-	</ul>
+	{{#each plans}}
+		{{> planLines}}
+	{{/each}}
 </template>

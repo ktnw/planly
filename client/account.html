@@ -1,12 +1,27 @@
 <template name="login">
-	<form class="login-form">
-		<p>Please login or <a href="#" class="signup">Sign up</a></p>
-		<p class="error-message">{{errorMessage}}</p>
-	    <label>Email:</label><input type="email" name="loginEmail"><br/>
-	    <label>Password:</label><input type="password" name="loginPassword"><br/>
-	    <input type="submit" value="Login">
-	    <p><a href="#" class="forgot-password">Forgot password</a></p>
-	</form>
+  	<div class="row">
+    	<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+			<form class="login-form">
+				<h4 align="center">Please sign in or <a href="#" class="signup">create an account</a></h4>
+				<div class="form-group">
+					<p class="error-message">{{errorMessage}}</p>
+				</div>
+				<div class="form-group">
+					<label for="loginEmail" class="sr-only">Email address</label>
+					<input type="email" id="loginEmail" class="form-control" placeholder="Email address" required autofocus>
+				</div>
+				<div class="form-group">
+		    		<label for="loginPassword" class="sr-only">Password</label>
+	        		<input type="password" id="loginPassword" class="form-control" placeholder="Password" required>
+	        	</div>
+	        	<div class="form-group">
+	        		<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	        	</div>
+	        	<div class="form-group">
+		    		<p align="center"><a href="#" class="forgot-password">Forgot password</a></p>		    	</div>
+			</form>
+		</div>
+	</div> <!-- /row -->
 </template>
 
 <template name="forgot-password">
@@ -28,9 +43,9 @@
 
 <template name="signup">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-4">
-      <h4 class="page-header">Sign Up</h4>
-      <form id="signup" class="signup">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+      <h4 align="center">Create new account</h4>
+      <form class="signup-form">
         <div class="form-group">
           <label for="emailAddress">Email Address</label>
           <input type="email" name="emailAddress" class="form-control" placeholder="Email Address">
@@ -40,10 +55,12 @@
           <input type="password" name="password" class="form-control" placeholder="Password">
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-success" value="Sign Up">
+          <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign Up">
         </div>
       </form>
-      <p>If you already have an account, <a href="#" class="login">log in</a></p>
+      <div class="form-group">
+      	<p align="center">If you already have an account, <a href="#" class="login">log in here</a>.</p>
+      </div>
     </div>
-  </div>
+  </div> <!-- row -->
 </template>

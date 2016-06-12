@@ -14,7 +14,8 @@ FlowRouter.route('/', {
   name: 'Home.show',
   action() {
   	console.log('Router action for path: ', FlowRouter.current().path);
-    BlazeLayout.render('main', { app: "home" });
+    //BlazeLayout.render('main', { app: "home" });
+    FlowRouter.go( '/activity' );
   },
 });
 

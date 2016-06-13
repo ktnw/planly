@@ -61,14 +61,14 @@ Meteor.methods({
       Plans.update( planId, {$set: plan} );
     }
   },
-  'tasks.insert'(planId, text) {
+  'tasks.insert'(planId, from, to, text, responsible) {
   	const plan = Plans.findOne(planId);
   	if (plan.authorId !== this.userId) {
   	  // If the current user is not the author, don't allow insert
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  const taskId = Random.id();
-	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "text": text, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
+	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, taskFrom: from, "taskTo": to, "text": text, "taskResponsible": responsible, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
 	}
   },
   'tasks.update'(planId, taskId, text) {

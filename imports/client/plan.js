@@ -30,14 +30,20 @@ Template.plan.events({
 
     // Get value from form element
     const target = event.target;
+    const from = target.taskFrom.value;
+    const to = target.taskTo.value;
     const text = target.taskText.value;
+    const responsible = target.taskResponsible.value;
     const planId = FlowRouter.getParam("id");
 
     // Insert a task into the collection
-    Meteor.call('tasks.insert', planId, text);
-
+    Meteor.call('tasks.insert', planId, from, to, text, responsible);
+    
     // Clear form
+    target.taskFrom.value = to;
+    target.taskTo.value = '';
     target.taskText.value = '';
+    target.taskResponsible.value='';
   },
   'submit .get-token'(event) {
     // Prevent default browser form submit

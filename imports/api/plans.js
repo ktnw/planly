@@ -68,16 +68,16 @@ Meteor.methods({
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  const taskId = Random.id();
-	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, taskFrom: from, "taskTo": to, "text": text, "taskResponsible": responsible, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
+	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "taskFrom": from, "taskTo": to, "text": text, "taskResponsible": responsible, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
 	}
   },
-  'tasks.update'(planId, taskId, text) {
+  'tasks.update'(planId, taskId, from, to, text, responsible) {
   	const plan = Plans.findOne(planId);
   	if (plan.authorId !== this.userId) {
   	  // If the current user is not the author, don't allow update
   	  throw new Meteor.Error('not-authorized');
   	} else {
-  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.text": text, "updatedAt": new Date() } } );
+  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.taskFrom": from, "tasks.$.taskTo": to, "tasks.$.text": text, "tasks.$.taskResponsible": responsible, "updatedAt": new Date() } } );
   	}
   },
   'tasks.delete'(planId, taskId) {

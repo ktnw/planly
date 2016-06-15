@@ -31,11 +31,14 @@ Template.taskLines.events({
   	event.preventDefault();
   	template.editTaskId.set(null);
   },
-  'submit .editTask'(event, template) {
+  'submit .edit-task'(event, template) {
     event.preventDefault();
-    const planId = FlowRouter.getParam("id"); 
+    const planId = FlowRouter.getParam("id");
+    const taskFrom = event.target.editTaskFrom.value;
+    const taskTo = event.target.editTaskTo.value;
     const text = event.target.editTaskText.value;
-    Meteor.call('tasks.update', planId, this._id, text);
+    const taskResponsible = event.target.editTaskResponsible.value;
+    Meteor.call('tasks.update', planId, this._id, taskFrom, taskTo, text, taskResponsible);
     template.editTaskId.set(null);
   },
   'keypress input'(event, template){

@@ -68,7 +68,7 @@ Meteor.methods({
   	  throw new Meteor.Error('not-authorized');
   	} else {
   	  const taskId = Random.id();
-	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "taskFrom": from, "taskTo": to, "text": text, "taskResponsible": responsible, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
+	  Plans.update( { "_id" : planId }, { $push: { "tasks": { _id: taskId, "taskFrom": new Date(from), "taskTo": new Date(to), "text": text, "taskResponsible": responsible, "status": "Not started", "createdAt": new Date() } }, $set: { "updatedAt": new Date() } } );
 	}
   },
   'tasks.update'(planId, taskId, from, to, text, responsible) {

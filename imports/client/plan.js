@@ -30,11 +30,16 @@ Template.plan.events({
 
     // Get value from form element
     const target = event.target;
-    const from = target.taskFrom.value;
-    const to = target.taskTo.value;
+    let picker1       = $( '#datetimepicker1' ),
+        fromDateTime  = picker1.data( 'DateTimePicker' ).date();
+    let picker2       = $( '#datetimepicker2' ),
+        toDateTime    = picker2.data( 'DateTimePicker' ).date();
     const text = target.taskText.value;
     const responsible = target.taskResponsible.value;
     const planId = FlowRouter.getParam("id");
+
+    let from = fromDateTime.format();
+    let to   = toDateTime.format();
 
     // Insert a task into the collection
     Meteor.call('tasks.insert', planId, from, to, text, responsible);

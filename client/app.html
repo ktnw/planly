@@ -70,12 +70,26 @@
 		  	<form class="new-task form-inline">
 		  		<div class="form-group">
 		  			<label for="taskFrom" class="sr-only">Task Start</label>
-					<input type="datetime-local" class="form-control-sm date-input" name="taskFrom" id="taskFrom" placeholder="Start" />
+			  		<div class="input-group" >
+						<input type="text" class="form-control-sm" data-DateTimePicker name="taskFrom" id="datetimepicker1" placeholder="Task start" />
+						<script type="text/javascript">
+							$(function () {
+								$('#datetimepicker1').datetimepicker();
+							});
+						</script>
+					</div>
 				</div>
 				<div class="form-group">
 		  			<label for="taskTo" class="sr-only">Task End</label>
-  					<input type="datetime-local" class="form-control-sm date-input" name="taskTo" id="taskTo" placeholder="End" />
-	  			</div>
+			  		<div class="input-group" >
+						<input type="text" class="form-control-sm" data-DateTimePicker name="taskTo" id="datetimepicker2" placeholder="Task end" />
+						<script type="text/javascript">
+							$(function () {
+								$('#datetimepicker2').datetimepicker();
+							});
+						</script>
+					</div>
+				</div>
 	  			<div class="form-group">
 		  			<label for="taskText" class="sr-only">Task Text</label>
 	  				<input type="text" class="form-control-sm" name="taskText"  id="taskText" placeholder="Add new task" />

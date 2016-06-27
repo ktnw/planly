@@ -24,3 +24,4 @@ accounts-base
 email
 momentjs:moment
 twbs:bootstrap
+tsega:bootstrap3-datetimepicker

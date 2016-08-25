@@ -17,6 +17,12 @@ Template.taskLines.helpers({
 	var plan = Plans.findOne({ _id: planId });
   	return isPlanAuthor(plan.authorId);
   },
+  taskFromTime: function() {
+  	return moment(this.taskFrom).format('MM/DD/YYYY hh:mm a');
+  },
+  taskToTime: function() {
+  	return moment(this.taskTo).format('MM/DD/YYYY hh:mm a');
+  },
 });
 
 Template.taskLines.events({
@@ -34,10 +40,16 @@ Template.taskLines.events({
   'submit .edit-task'(event, template) {
     event.preventDefault();
     const planId = FlowRouter.getParam("id");
-    const taskFrom = event.target.editTaskFrom.value;
-    const taskTo = event.target.editTaskTo.value;
+    let picker1       = $( '#datetimepicker1' ),
+        fromDateTime  = picker1.data( 'DateTimePicker' ).date();
+    let picker2       = $( '#datetimepicker2' ),
+        toDateTime    = picker2.data( 'DateTimePicker' ).date();
     const text = event.target.editTaskText.value;
     const taskResponsible = event.target.editTaskResponsible.value;
+
+    let taskFrom = fromDateTime.format();
+    let taskTo   = toDateTime.format();
+
     Meteor.call('tasks.update', planId, this._id, taskFrom, taskTo, text, taskResponsible);
     template.editTaskId.set(null);
   },

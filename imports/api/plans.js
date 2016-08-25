@@ -77,7 +77,7 @@ Meteor.methods({
   	  // If the current user is not the author, don't allow update
   	  throw new Meteor.Error('not-authorized');
   	} else {
-  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.taskFrom": from, "tasks.$.taskTo": to, "tasks.$.text": text, "tasks.$.taskResponsible": responsible, "updatedAt": new Date() } } );
+  	  Plans.update({ "_id" : planId, "tasks._id": taskId }, { $set: {"tasks.$.taskFrom": new Date(from), "tasks.$.taskTo": new Date(to), "tasks.$.text": text, "tasks.$.taskResponsible": responsible, "updatedAt": new Date() } } );
   	}
   },
   'tasks.delete'(planId, taskId) {
